@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zaza Cars — Doe Het Zelf Garage & Autoverkoop | Rotterdam</title>
+    <meta name="description" content="Zaza Cars Rotterdam — Doe het zelf garage en autoverkoop. 4.8 sterren op Google. Bel 06-30857155.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+        :root{
+            --black:#08070A;--dark:#0F0E13;--card:#17161D;--border:#282730;
+            --muted:#8580918;--light:#D6D2E0;--white:#F4F2F8;
+            --accent:#7C3AED;--accent-glow:rgba(124,58,237,0.1);
+            --accent-light:#8B5CF6;
+        }
+        html{scroll-behavior:smooth}
+        body{font-family:'DM Sans',sans-serif;background:var(--black);color:var(--light);line-height:1.6;overflow-x:hidden}
+        h1,h2,h3,h4,h5,h6{font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;line-height:1.15}
+        img{max-width:100%;display:block}a{text-decoration:none;color:inherit}
+
+        .nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(8,7,10,0.88);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid var(--border)}
+        .nav-inner{max-width:1200px;margin:0 auto;padding:0 24px;display:flex;align-items:center;justify-content:space-between;height:72px}
+        .nav-logo{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1.2rem;color:var(--white);display:flex;align-items:center;gap:10px}
+        .nav-logo .icon{color:var(--accent-light);font-size:1.3rem}
+        .nav-links{display:flex;gap:32px;list-style:none}
+        .nav-links a{font-size:.9rem;font-weight:500;color:var(--muted);transition:color .3s}
+        .nav-links a:hover{color:var(--white)}
+        .nav-cta{background:var(--accent);color:var(--white);padding:10px 24px;border-radius:8px;font-weight:600;font-size:.9rem;transition:transform .2s,box-shadow .3s;border:none;cursor:pointer}
+        .nav-cta:hover{transform:translateY(-1px);box-shadow:0 8px 24px var(--accent-glow)}
+        .mobile-toggle{display:none;background:none;border:none;cursor:pointer;padding:8px}
+        .mobile-toggle span{display:block;width:24px;height:2px;background:var(--white);margin:6px 0;transition:.3s}
+
+        .hero{position:relative;min-height:100vh;display:flex;align-items:center;overflow:hidden}
+        .hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 60% 30%,rgba(124,58,237,0.08) 0%,transparent 55%),radial-gradient(ellipse at 20% 80%,rgba(124,58,237,0.04) 0%,transparent 50%)}
+        .hero-content{position:relative;z-index:2;max-width:1200px;margin:0 auto;padding:120px 24px 80px}
+        .hero-badge{display:inline-flex;align-items:center;gap:8px;background:var(--accent-glow);border:1px solid rgba(124,58,237,0.25);padding:8px 16px;border-radius:100px;font-size:.85rem;font-weight:500;color:var(--accent-light);margin-bottom:24px;animation:fadeUp .8s ease both}
+        .hero-badge .dot{width:6px;height:6px;border-radius:50%;background:var(--accent);animation:pulse 2s infinite}
+        .hero h1{font-size:clamp(2.4rem,5.5vw,4.2rem);color:var(--white);margin-bottom:20px;max-width:700px;animation:fadeUp .8s ease .1s both}
+        .hero h1 span{color:var(--accent-light)}
+        .hero-sub{font-size:1.12rem;color:var(--muted);max-width:520px;margin-bottom:36px;animation:fadeUp .8s ease .2s both}
+        .hero-actions{display:flex;gap:16px;flex-wrap:wrap;animation:fadeUp .8s ease .3s both}
+        .btn-primary{background:var(--accent);color:var(--white);padding:14px 32px;border-radius:10px;font-weight:600;font-size:1rem;display:inline-flex;align-items:center;gap:8px;transition:transform .2s,box-shadow .3s;border:none;cursor:pointer}
+        .btn-primary:hover{transform:translateY(-2px);box-shadow:0 12px 32px var(--accent-glow)}
+        .btn-secondary{background:var(--card);color:var(--white);padding:14px 32px;border-radius:10px;font-weight:600;font-size:1rem;border:1px solid var(--border);display:inline-flex;align-items:center;gap:8px;transition:border-color .3s,background .3s;cursor:pointer}
+        .btn-secondary:hover{border-color:var(--accent);background:rgba(124,58,237,0.06)}
+        .hero-stats{display:flex;gap:48px;margin-top:56px;animation:fadeUp .8s ease .4s both}
+        .hero-stat-number{font-family:'Plus Jakarta Sans';font-weight:800;font-size:1.8rem;color:var(--white)}
+        .hero-stat-label{font-size:.85rem;color:var(--muted);margin-top:4px}
+
+        .section{max-width:1200px;margin:0 auto;padding:100px 24px}
+        .section-label{font-size:.85rem;font-weight:600;color:var(--accent-light);text-transform:uppercase;letter-spacing:2px;margin-bottom:12px}
+        .section-title{font-size:clamp(1.8rem,4vw,2.8rem);color:var(--white);margin-bottom:16px}
+        .section-sub{color:var(--muted);font-size:1.05rem;max-width:560px;margin-bottom:48px}
+
+        #diensten{background:var(--dark)}
+        .services-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:20px}
+        .service-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:32px 28px;transition:border-color .3s,transform .3s}
+        .service-card:hover{border-color:var(--accent);transform:translateY(-4px)}
+        .service-icon{width:48px;height:48px;background:var(--accent-glow);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.4rem;margin-bottom:20px}
+        .service-card h3{font-size:1.15rem;color:var(--white);margin-bottom:10px}
+        .service-card p{color:var(--muted);font-size:.92rem}
+
+        .how-it-works{background:var(--dark)}
+        .steps-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:20px;counter-reset:step}
+        .step-card{text-align:center;padding:40px 24px;background:var(--card);border:1px solid var(--border);border-radius:14px;counter-increment:step;position:relative}
+        .step-card::before{content:counter(step);font-family:'Plus Jakarta Sans';font-weight:800;font-size:3rem;color:var(--accent);opacity:.3;position:absolute;top:16px;right:24px}
+        .step-card h3{font-size:1.05rem;color:var(--white);margin-bottom:8px}
+        .step-card p{font-size:.9rem;color:var(--muted)}
+        .step-icon{font-size:2rem;margin-bottom:16px}
+
+        #reviews{background:var(--dark)}
+        .reviews-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:20px}
+        .review-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:28px}
+        .review-stars{color:#FBBF24;font-size:1rem;margin-bottom:14px;letter-spacing:2px}
+        .review-text{color:var(--light);font-size:.95rem;margin-bottom:18px;font-style:italic;line-height:1.7}
+        .review-author{display:flex;align-items:center;gap:12px}
+        .review-avatar{width:40px;height:40px;border-radius:50%;background:var(--accent-glow);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.9rem;color:var(--accent-light)}
+        .review-name{font-weight:600;color:var(--white);font-size:.9rem}
+        .review-date{font-size:.8rem;color:var(--muted)}
+
+        .contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:40px}
+        .contact-info-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:36px}
+        .contact-item{display:flex;gap:16px;padding:18px 0;border-bottom:1px solid var(--border)}
+        .contact-item:last-child{border-bottom:none}
+        .contact-icon{width:44px;height:44px;flex-shrink:0;background:var(--accent-glow);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.1rem}
+        .contact-item-label{font-size:.8rem;color:var(--muted);margin-bottom:4px}
+        .contact-item-value{font-weight:600;color:var(--white);font-size:.95rem}
+        .hours-grid{display:grid;gap:8px;margin-top:16px}
+        .hours-row{display:flex;justify-content:space-between;font-size:.9rem;padding:6px 0}
+        .hours-day{color:var(--muted)}.hours-time{color:var(--white);font-weight:500}
+        .hours-today{color:var(--accent-light)}.hours-closed{color:#EF4444}
+
+        .contact-form{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:36px}
+        .contact-form h3{font-size:1.3rem;color:var(--white);margin-bottom:24px}
+        .form-group{margin-bottom:18px}
+        .form-group label{display:block;font-size:.85rem;color:var(--muted);margin-bottom:6px;font-weight:500}
+        .form-group input,.form-group textarea{width:100%;background:var(--dark);border:1px solid var(--border);border-radius:10px;padding:12px 16px;color:var(--white);font-family:'DM Sans',sans-serif;font-size:.95rem;transition:border-color .3s}
+        .form-group input:focus,.form-group textarea:focus{outline:none;border-color:var(--accent)}
+        .form-group textarea{resize:vertical;min-height:100px}
+        .form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+
+        .footer{background:var(--dark);border-top:1px solid var(--border);padding:40px 24px}
+        .footer-inner{max-width:1200px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px}
+        .footer-text{color:var(--muted);font-size:.85rem}
+
+        @keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+        @keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+        .fade-in{opacity:0;transform:translateY(24px);transition:opacity .6s ease,transform .6s ease}
+        .fade-in.visible{opacity:1;transform:translateY(0)}
+
+        @media(max-width:768px){
+            .nav-links,.nav-cta{display:none}.mobile-toggle{display:block}
+            .nav.open .nav-links{display:flex;flex-direction:column;position:absolute;top:72px;left:0;right:0;background:rgba(8,7,10,0.97);padding:24px;gap:20px;border-bottom:1px solid var(--border)}
+            .hero-stats{gap:24px;flex-wrap:wrap}
+            .services-grid{grid-template-columns:1fr}
+            .steps-grid{grid-template-columns:1fr}
+            .contact-grid{grid-template-columns:1fr}
+            .form-row{grid-template-columns:1fr}
+            .reviews-grid{grid-template-columns:1fr}
+            .footer-inner{flex-direction:column;text-align:center}
+        }
+    </style>
+</head>
+<body>
+
+<nav class="nav" id="nav">
+    <div class="nav-inner">
+        <a href="#" class="nav-logo"><span class="icon">🚗</span> Zaza Cars</a>
+        <ul class="nav-links">
+            <li><a href="#diensten">Diensten</a></li>
+            <li><a href="#hoe-werkt-het">Hoe werkt het</a></li>
+            <li><a href="#reviews">Beoordelingen</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+        <a href="tel:0630857155" class="nav-cta">Bel direct</a>
+        <button class="mobile-toggle" onclick="document.getElementById('nav').classList.toggle('open')" aria-label="Menu">
+            <span></span><span></span><span></span>
+        </button>
+    </div>
+</nav>
+
+<section class="hero">
+    <div class="hero-content">
+        <div class="hero-badge"><span class="dot"></span>Doe Het Zelf Garage & Autoverkoop — Rotterdam</div>
+        <h1>Zelf sleutelen? <span>Wij regelen de rest.</span></h1>
+        <p class="hero-sub">Bij Zaza Cars huurt u een werkplaats met professioneel gereedschap en sleutelt u zelf aan uw auto. Goedkoper, leerzaam en op uw eigen tempo. Ook voor autoverkoop.</p>
+        <div class="hero-actions">
+            <a href="tel:0630857155" class="btn-primary">📞 Bel 06-30857155</a>
+            <a href="#diensten" class="btn-secondary">Bekijk aanbod →</a>
+        </div>
+        <div class="hero-stats">
+            <div><div class="hero-stat-number">★ 4.8</div><div class="hero-stat-label">Google Reviews</div></div>
+            <div><div class="hero-stat-number">DHZ</div><div class="hero-stat-label">Doe Het Zelf concept</div></div>
+            <div><div class="hero-stat-number">6 dagen</div><div class="hero-stat-label">Per week open</div></div>
+        </div>
+    </div>
+</section>
+
+<section id="diensten">
+    <div class="section">
+        <p class="section-label fade-in">Ons aanbod</p>
+        <h2 class="section-title fade-in">Sleutelen of laten doen — bij ons kan het allebei</h2>
+        <p class="section-sub fade-in">Huur een werkplek en sleutel zelf, of laat ons het werk doen. Daarnaast hebben wij een wisselend aanbod aan occasions.</p>
+        <div class="services-grid">
+            <div class="service-card fade-in">
+                <div class="service-icon">🔧</div>
+                <h3>Doe Het Zelf Werkplaats</h3>
+                <p>Huur een plek in onze werkplaats inclusief brug en gereedschap. U sleutelt zelf, wij bieden de faciliteiten.</p>
+            </div>
+            <div class="service-card fade-in">
+                <div class="service-icon">🛠️</div>
+                <h3>Begeleiding & Advies</h3>
+                <p>Komt u er niet uit? Onze monteurs helpen u graag op weg met advies en handige tips.</p>
+            </div>
+            <div class="service-card fade-in">
+                <div class="service-icon">🚘</div>
+                <h3>Autoverkoop</h3>
+                <p>Wisselend aanbod aan betrouwbare occasions. Eerlijk gecontroleerd en scherp geprijsd.</p>
+            </div>
+            <div class="service-card fade-in">
+                <div class="service-icon">🔍</div>
+                <h3>APK Keuring</h3>
+                <p>Snel en eerlijk uw APK regelen. Vaak dezelfde dag nog klaar.</p>
+            </div>
+            <div class="service-card fade-in">
+                <div class="service-icon">⚙️</div>
+                <h3>Reparaties</h3>
+                <p>Liever niet zelf doen? Wij voeren ook reparaties uit — vakkundig en tegen een eerlijke prijs.</p>
+            </div>
+            <div class="service-card fade-in">
+                <div class="service-icon">📋</div>
+                <h3>Diagnose</h3>
+                <p>Professionele diagnoseapparatuur beschikbaar. Vind snel de oorzaak van een storing.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="hoe-werkt-het" class="how-it-works">
+    <div class="section">
+        <p class="section-label fade-in">Hoe werkt het</p>
+        <h2 class="section-title fade-in">In 3 stappen aan de slag</h2>
+        <p class="section-sub fade-in">Zelf sleutelen bij Zaza Cars is simpel. Geen poespas, gewoon aan de slag.</p>
+        <div class="steps-grid">
+            <div class="step-card fade-in">
+                <div class="step-icon">📞</div>
+                <h3>Reserveer een plek</h3>
+                <p>Bel of app ons om een werkplek te reserveren. Wij plannen u in op een moment dat u uitkomt.</p>
+            </div>
+            <div class="step-card fade-in">
+                <div class="step-icon">🔧</div>
+                <h3>Sleutel zelf</h3>
+                <p>U krijgt een werkplek met brug en toegang tot professioneel gereedschap. Sleutel op uw eigen tempo.</p>
+            </div>
+            <div class="step-card fade-in">
+                <div class="step-icon">✅</div>
+                <h3>Klaar? Rijd weg</h3>
+                <p>Werk afgerond? Ruim uw plek op en rijd weg. Zo simpel is het.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="reviews">
+    <div class="section">
+        <p class="section-label fade-in">Beoordelingen</p>
+        <h2 class="section-title fade-in">Wat onze klanten zeggen</h2>
+        <p class="section-sub fade-in">Met een 4.8 op Google zijn onze klanten zeer tevreden over de service en faciliteiten.</p>
+        <div class="reviews-grid">
+            <div class="review-card fade-in">
+                <div class="review-stars">★★★★★</div>
+                <p class="review-text">"Top concept! Alles wat je nodig hebt is aanwezig. Brug, gereedschap en als je vastloopt helpen ze je ook nog. Aanrader!"</p>
+                <div class="review-author">
+                    <div class="review-avatar">K</div>
+                    <div><div class="review-name">Klant</div><div class="review-date">Google Review</div></div>
+                </div>
+            </div>
+            <div class="review-card fade-in">
+                <div class="review-stars">★★★★★</div>
+                <p class="review-text">"Eerlijke prijzen en goede faciliteiten. Fijn om zelf aan je auto te kunnen werken zonder een complete werkplaats thuis nodig te hebben."</p>
+                <div class="review-author">
+                    <div class="review-avatar">K</div>
+                    <div><div class="review-name">Klant</div><div class="review-date">Google Review</div></div>
+                </div>
+            </div>
+            <div class="review-card fade-in">
+                <div class="review-stars">★★★★★</div>
+                <p class="review-text">"Super vriendelijke mensen. Goede plek om zelf te sleutelen. Ook een goede auto gekocht hier, loopt nog steeds perfect."</p>
+                <div class="review-author">
+                    <div class="review-avatar">K</div>
+                    <div><div class="review-name">Klant</div><div class="review-date">Google Review</div></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="contact">
+    <div class="section">
+        <p class="section-label fade-in">Contact</p>
+        <h2 class="section-title fade-in">Neem contact op</h2>
+        <p class="section-sub fade-in">Bel, app of stuur een bericht. Wij reageren altijd snel.</p>
+        <div class="contact-grid">
+            <div>
+                <div class="contact-info-card fade-in">
+                    <div class="contact-item">
+                        <div class="contact-icon">📍</div>
+                        <div><div class="contact-item-label">Adres</div><div class="contact-item-value">Schansweg 61, 3042 HT Rotterdam</div></div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">📞</div>
+                        <div><div class="contact-item-label">Telefoon</div><div class="contact-item-value"><a href="tel:0630857155" style="color:var(--white)">06-30857155</a></div></div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">🕐</div>
+                        <div>
+                            <div class="contact-item-label">Openingstijden</div>
+                            <div class="hours-grid">
+                                <div class="hours-row"><span class="hours-day">Maandag</span><span class="hours-time">10:00 – 17:00</span></div>
+                                <div class="hours-row"><span class="hours-day">Dinsdag</span><span class="hours-time">10:00 – 17:00</span></div>
+                                <div class="hours-row"><span class="hours-day">Woensdag</span><span class="hours-time">09:00 – 18:00</span></div>
+                                <div class="hours-row"><span class="hours-day">Donderdag</span><span class="hours-time">10:00 – 17:00</span></div>
+                                <div class="hours-row"><span class="hours-day">Vrijdag</span><span class="hours-time">10:00 – 17:00</span></div>
+                                <div class="hours-row"><span class="hours-day">Zaterdag</span><span class="hours-time">10:00 – 17:00</span></div>
+                                <div class="hours-row"><span class="hours-day">Zondag</span><span class="hours-time hours-closed">Gesloten</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="contact-form fade-in">
+                <h3>Stuur ons een bericht</h3>
+                <div class="form-row">
+                    <div class="form-group"><label>Naam</label><input type="text" placeholder="Uw naam"></div>
+                    <div class="form-group"><label>Telefoon</label><input type="tel" placeholder="06-12345678"></div>
+                </div>
+                <div class="form-group"><label>E-mail</label><input type="email" placeholder="uw@email.nl"></div>
+                <div class="form-group"><label>Bericht</label><textarea placeholder="Beschrijf kort waarmee we u kunnen helpen..."></textarea></div>
+                <button class="btn-primary" style="width:100%;justify-content:center">Verstuur bericht</button>
+            </div>
+        </div>
+    </div>
+</section>
+
+<footer class="footer">
+    <div class="footer-inner">
+        <div class="nav-logo"><span class="icon">🚗</span> Zaza Cars</div>
+        <div class="footer-text">© 2026 Zaza Cars — Doe Het Zelf Garage & Autoverkoop, Rotterdam</div>
+    </div>
+</footer>
+
+<script>
+    const observer=new IntersectionObserver(e=>{e.forEach(el=>{if(el.isIntersecting)el.target.classList.add('visible')})},{threshold:.1,rootMargin:'0px 0px -40px 0px'});
+    document.querySelectorAll('.fade-in').forEach(el=>observer.observe(el));
+    document.querySelectorAll('.nav-links a').forEach(l=>{l.addEventListener('click',()=>document.getElementById('nav').classList.remove('open'))});
+    const days=['Zondag','Maandag','Dinsdag','Woensdag','Donderdag','Vrijdag','Zaterdag'];
+    const today=days[new Date().getDay()];
+    document.querySelectorAll('.hours-row').forEach(row=>{
+        if(row.querySelector('.hours-day').textContent===today){
+            row.querySelector('.hours-day').classList.add('hours-today');
+            const t=row.querySelector('.hours-time');if(!t.classList.contains('hours-closed'))t.classList.add('hours-today');
+        }
+    });
+</script>
+</body>
+</html>
